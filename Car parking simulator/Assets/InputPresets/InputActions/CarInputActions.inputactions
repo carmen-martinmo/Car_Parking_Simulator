@@ -1,0 +1,204 @@
+{
+    "name": "CarInputActions",
+    "maps": [
+        {
+            "name": "Car",
+            "id": "b97aba14-ef81-4cfa-9386-6bed8111931c",
+            "actions": [
+                {
+                    "name": "Car lights",
+                    "type": "Button",
+                    "id": "1ea4a0ec-2ed3-4adb-acc2-439c598b860c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Reset level",
+                    "type": "Value",
+                    "id": "963c11bf-6a2c-422b-94af-23b00072afe4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RightJoystickPress",
+                    "type": "Button",
+                    "id": "21e14d90-0f6a-4ae6-9522-546a8cb28d2a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LeftJoystickPress",
+                    "type": "Button",
+                    "id": "2476a889-0e8c-4fe7-94f1-8380ffd2c19a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LeftJoystickVertical",
+                    "type": "Value",
+                    "id": "17601610-cd1e-4876-9cc0-55b36b0970cd",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RightJoystickVertical",
+                    "type": "Value",
+                    "id": "b3de6524-57c1-4db5-bd0b-a2ba20d10151",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LeftJoystickHorizontal",
+                    "type": "Value",
+                    "id": "190ee621-6a25-4202-8a04-84111721432e",
+                    "expectedControlType": "Axis",
+                    "processors": "Invert",
+                    "interactions": ""
+                },
+                {
+                    "name": "RightJoystickHorizontal",
+                    "type": "Value",
+                    "id": "fc35369f-f30a-42c0-9ea2-16618e0b3080",
+                    "expectedControlType": "Axis",
+                    "processors": "Invert",
+                    "interactions": ""
+                },
+                {
+                    "name": "RightTrigger",
+                    "type": "Value",
+                    "id": "b548a384-72a3-4e53-8d33-67ed09c34506",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LeftTrigger",
+                    "type": "Value",
+                    "id": "8c54da28-5a7d-4d53-9621-9d35c8c0e8f5",
+                    "expectedControlType": "Axis",
+                    "processors": "Invert",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f3daf7fc-19eb-4b82-8ea3-79bc637f8401",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Car lights",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cdbef4c8-e339-40ed-bc9a-85035e02f693",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset level",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b01cb4bf-c32b-4a74-9288-2da0185b780a",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightJoystickPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e62e0942-0c61-4a02-8238-f0138a8b0929",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftJoystickPress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93af7e2f-8de8-4f64-bbab-3d3726a5df7a",
+                    "path": "<Gamepad>/leftStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftJoystickVertical",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6b5c16f-c8f0-45ab-ac61-50dcc43a9c40",
+                    "path": "<Gamepad>/leftStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftJoystickHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f855ef98-6a8e-491f-8e61-922439c6f6c2",
+                    "path": "<Gamepad>/rightStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightJoystickVertical",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3ebc121-db82-48f8-ab70-fc39bc4e8da5",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightJoystickHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7da8885d-5468-4645-b88c-66acb6d08f51",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b12497e4-6c3c-455e-a678-8aff7bbcfb84",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

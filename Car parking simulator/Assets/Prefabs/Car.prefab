@@ -1245,6 +1245,7 @@ GameObject:
   - component: {fileID: 8900672991292037578}
   - component: {fileID: 8900672991292037577}
   - component: {fileID: 8900672991292037576}
+  - component: {fileID: 3480554153549235774}
   m_Layer: 0
   m_Name: Car
   m_TagString: Car
@@ -1322,6 +1323,7 @@ MonoBehaviour:
   max_wheel_turns_: 1.5
   breaking_force_: 1000
   car_fuel_consumption_: 0.01
+  wheel_correction_time_: 1
 --- !u!114 &3176183810444825114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1753,6 +1755,196 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3480554153549235774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8900672991292037586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 048ec640e9f4952409758ea18ff7bfa9, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: AButtonInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1ea4a0ec-2ed3-4adb-acc2-439c598b860c
+    m_ActionName: Car/Car lights[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: BButtonInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 963c11bf-6a2c-422b-94af-23b00072afe4
+    m_ActionName: Car/Reset level[/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: RightJoystickPress
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 21e14d90-0f6a-4ae6-9522-546a8cb28d2a
+    m_ActionName: Car/RightJoystickPress[/XInputControllerWindows/rightStickPress]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: LeftJoystickPress
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2476a889-0e8c-4fe7-94f1-8380ffd2c19a
+    m_ActionName: Car/LeftJoystickPress[/XInputControllerWindows/leftStickPress]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: LeftJoystickVertical
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 17601610-cd1e-4876-9cc0-55b36b0970cd
+    m_ActionName: Car/LeftJoystickVertical[/XInputControllerWindows/leftStick/y]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: RightJoystickVertical
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b3de6524-57c1-4db5-bd0b-a2ba20d10151
+    m_ActionName: Car/RightJoystickVertical[/XInputControllerWindows/rightStick/y]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: LeftJoystickHorizontal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 190ee621-6a25-4202-8a04-84111721432e
+    m_ActionName: Car/LeftJoystickHorizontal[/XInputControllerWindows/leftStick/x]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: RightJoystickHorizontal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fc35369f-f30a-42c0-9ea2-16618e0b3080
+    m_ActionName: Car/RightJoystickHorizontal[/XInputControllerWindows/rightStick/x]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: RightTrigger
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b548a384-72a3-4e53-8d33-67ed09c34506
+    m_ActionName: Car/RightTrigger[/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3176183810444825114}
+        m_TargetAssemblyTypeName: CarInputs, Assembly-CSharp
+        m_MethodName: LeftTrigger
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8c54da28-5a7d-4d53-9621-9d35c8c0e8f5
+    m_ActionName: Car/LeftTrigger[/XInputControllerWindows/leftTrigger]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Car
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &8900672991306167251
 GameObject:
   m_ObjectHideFlags: 0
@@ -3379,44 +3571,9 @@ PrefabInstance:
       objectReference: {fileID: 5310693992704221580}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
---- !u!108 &8900672992024613723 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 10893654, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
-  m_PrefabInstance: {fileID: 8900672992018459149}
-  m_PrefabAsset: {fileID: 0}
---- !u!108 &8900672992024618379 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 10882950, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
-  m_PrefabInstance: {fileID: 8900672992018459149}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8900672992018352141 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 434688, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
-  m_PrefabInstance: {fileID: 8900672992018459149}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8900672992018595737 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 136596, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
-  m_PrefabInstance: {fileID: 8900672992018459149}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8900672992018349493 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 448440, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
-  m_PrefabInstance: {fileID: 8900672992018459149}
-  m_PrefabAsset: {fileID: 0}
---- !u!108 &8900672992024542271 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 10835506, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
-  m_PrefabInstance: {fileID: 8900672992018459149}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8900672992018302737 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 421148, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
-  m_PrefabInstance: {fileID: 8900672992018459149}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8900672992018320413 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 402960, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
   m_PrefabInstance: {fileID: 8900672992018459149}
   m_PrefabAsset: {fileID: 0}
 --- !u!108 &8900672992024601345 stripped
@@ -3424,14 +3581,49 @@ Light:
   m_CorrespondingSourceObject: {fileID: 10897676, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
   m_PrefabInstance: {fileID: 8900672992018459149}
   m_PrefabAsset: {fileID: 0}
+--- !u!108 &8900672992024545813 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 10821656, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
+  m_PrefabInstance: {fileID: 8900672992018459149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &8900672992024613723 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 10893654, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
+  m_PrefabInstance: {fileID: 8900672992018459149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8900672992018349493 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 448440, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
+  m_PrefabInstance: {fileID: 8900672992018459149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8900672992018352141 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 434688, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
+  m_PrefabInstance: {fileID: 8900672992018459149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &8900672992024542271 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 10835506, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
+  m_PrefabInstance: {fileID: 8900672992018459149}
+  m_PrefabAsset: {fileID: 0}
 --- !u!108 &8900672992024557179 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 10820726, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
   m_PrefabInstance: {fileID: 8900672992018459149}
   m_PrefabAsset: {fileID: 0}
---- !u!108 &8900672992024545813 stripped
+--- !u!4 &8900672992018320413 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 402960, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
+  m_PrefabInstance: {fileID: 8900672992018459149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &8900672992024618379 stripped
 Light:
-  m_CorrespondingSourceObject: {fileID: 10821656, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
+  m_CorrespondingSourceObject: {fileID: 10882950, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
+  m_PrefabInstance: {fileID: 8900672992018459149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8900672992018595737 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 136596, guid: 271f6c29f65972d4492013b8893175b2, type: 3}
   m_PrefabInstance: {fileID: 8900672992018459149}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8900672992503660221
@@ -3503,13 +3695,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84d252b63be66094ead676d4f1e44915, type: 3}
---- !u!4 &8939420481919555926 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 84d252b63be66094ead676d4f1e44915, type: 3}
-  m_PrefabInstance: {fileID: 8900672992503660221}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8594243836440134636 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 84d252b63be66094ead676d4f1e44915, type: 3}
+  m_PrefabInstance: {fileID: 8900672992503660221}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8939420481919555926 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 84d252b63be66094ead676d4f1e44915, type: 3}
   m_PrefabInstance: {fileID: 8900672992503660221}
   m_PrefabAsset: {fileID: 0}

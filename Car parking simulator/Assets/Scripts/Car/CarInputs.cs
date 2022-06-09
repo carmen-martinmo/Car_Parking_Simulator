@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class CarInputs : MonoBehaviour {
@@ -23,7 +24,6 @@ public class CarInputs : MonoBehaviour {
   bool car_lights_button_;
   bool reset_button_;
 
-
   public void init(CarController reference) {
     car_controller_ = reference;
   }
@@ -33,23 +33,6 @@ public class CarInputs : MonoBehaviour {
   }
 
   void Update() {
-    right_joystick_press_ = Input.GetButtonDown("Reverse");
-    left_joystick_press_ = Input.GetButtonDown("CameraMode");
-
-    left_joystick_vertical_ = Input.GetAxis("LeftJoystickVer");
-    left_joystick_horizontal_ = Input.GetAxisRaw("LeftJoystickHor");
-
-    right_joystick_vertical_ = Input.GetAxis("RightJoystickVer");
-    right_joystick_horizontal_ = Input.GetAxisRaw("RightJoystickHor");
-
-    accelerate_car_axis_ = Mathf.Clamp(Input.GetAxis ("AccelerateCar"), 0.0f, 1.0f);
-    brake_car_axis_ = Mathf.Clamp(Input.GetAxis("BrakeCar"), -1.0f, 0.0f);
-
-    accelerate_car_raw_axis_ = Input.GetAxisRaw("AccelerateCar");
-
-    car_lights_button_ = Input.GetButtonDown("AButton");
-    reset_button_ = Input.GetButton("BButton");
-
     float reverse_multiplier = car_controller_.car_movement().reverse_multiplier();
     ChangeDirection(reverse_multiplier);
 
@@ -60,14 +43,11 @@ public class CarInputs : MonoBehaviour {
     TurnCarLights(car_lights_state);
   }
 
-  void TurnCarLights(bool car_lights_state) {
-    if (car_lights_button_) {
-      car_lights_state = !car_lights_state;
-      car_controller_.set_car_lights(car_lights_state);
-    }
+  public void TurnCarLights(bool car_lights_state) {
+    car_controller_.set_car_lights(car_lights_button_);
   }
 
-  void ChangeDirection(float reverse_multiplier) {
+  public void ChangeDirection(float reverse_multiplier) {
     if (right_joystick_press_) {
       reverse_multiplier *= -1.0f;
       car_controller_.car_movement().set_reverse_multiplier(reverse_multiplier);
@@ -80,10 +60,12 @@ public class CarInputs : MonoBehaviour {
         gm_instance_.audio_controller_ref_.PlaySoundEffect("Directional_mode");
         car_controller_.direction_layout_.material = car_controller_.direction_layout_mats_[0];
       }
+
+      right_joystick_press_ = false;
     }
   }
 
-  void HandBrake(bool hand_braking) {
+  public void HandBrake(bool hand_braking) {
     if (left_joystick_press_) {
       hand_braking = !hand_braking;
       car_controller_.car_movement().set_hand_braking(hand_braking);
@@ -94,11 +76,56 @@ public class CarInputs : MonoBehaviour {
       else {
         gm_instance_.audio_controller_ref_.PlaySoundEffect("Handbrake_off");
       }
+
+      left_joystick_press_ = false;
     }
 
     if (hand_braking) {
       car_controller_.car_movement().set_current_brake_force(100000f);
     }
+  }
+
+  // GET INPUTS
+  public void RightJoystickPress(InputAction.CallbackContext context) {
+    right_joystick_press_ = !right_joystick_press_;
+  }
+
+  public void LeftJoystickPress(InputAction.CallbackContext context) {
+    left_joystick_press_ = !left_joystick_press_;
+  }
+  public void LeftJoystickVertical(InputAction.CallbackContext context) {
+    left_joystick_vertical_ = context.ReadValue<float>();
+  }
+
+  public void LeftJoystickHorizontal(InputAction.CallbackContext context) {
+    left_joystick_horizontal_ = context.ReadValue<float>();
+  }
+  public void RightJoystickVertical(InputAction.CallbackContext context) {
+    right_joystick_vertical_ = context.ReadValue<float>();
+  }
+
+  public void RightJoystickHorizontal(InputAction.CallbackContext context) {
+    right_joystick_horizontal_ = context.ReadValue<float>();
+  }
+
+  public void RightTrigger(InputAction.CallbackContext context) {
+    accelerate_car_axis_ = context.ReadValue<float>();
+
+    if (accelerate_car_axis_ > 0.0f) accelerate_car_raw_axis_ = 1.0f;
+    else accelerate_car_raw_axis_ = 0.0f;
+  }
+
+  public void LeftTrigger(InputAction.CallbackContext context) {
+    brake_car_axis_ = context.ReadValue<float>();
+  }
+
+  public void AButtonInput() {
+    car_lights_button_ = !car_lights_button_;
+  }
+
+  public void BButtonInput(InputAction.CallbackContext context) {
+    if (context.canceled) reset_button_ = false;
+    else reset_button_ = true;
   }
 
   public bool right_joystick_press() {
