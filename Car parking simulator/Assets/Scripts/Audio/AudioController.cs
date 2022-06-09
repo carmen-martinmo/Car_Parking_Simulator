@@ -40,7 +40,7 @@ public class AudioController : MonoBehaviour {
 	}
 
 	public void PlaySong(string sound) {
-		Sound s = GetSong(sound); //Array.Find(sounds, item => item.name == sound);
+		Sound s = GetSong(sound);
 		if (s == null) {
 			Debug.LogWarning("Sound: " + name + " not found!");
 			return;
@@ -53,7 +53,7 @@ public class AudioController : MonoBehaviour {
 	}
 
 	public void PlaySoundEffect(string sound) {
-		Sound s = GetSoundEffect(sound); //Array.Find(sounds, item => item.name == sound);
+		Sound s = GetSoundEffect(sound);
 		if (s == null) {
 			Debug.LogWarning("Sound: " + name + " not found!");
 			return;
@@ -101,7 +101,6 @@ public class AudioController : MonoBehaviour {
 		return s;
 	}
 
-	// Start is called before the first frame update
 	public void SetMusicOn(bool activate) {
     is_music_on_ = activate;
 		float volume_value = activate ? 0.0f : -80.0f;
@@ -114,7 +113,6 @@ public class AudioController : MonoBehaviour {
     }
   }
 
-  // Update is called once per frame
   public void SetSoundEffectsOn(bool activate) {
     are_sound_effects_on_ = activate;
 		float volume_value = activate ? 0.0f : -80.0f;

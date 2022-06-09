@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfTypeDate xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TypeDate>
+    <guid>37f9761a8bd354e4ea58544b8b976c43</guid>
+    <fileName>Assets/Cartoon SportCar B01/script/brake_light.cs</fileName>
+    <timeStamp>2022-04-30T16:49:46+02:00</timeStamp>
+    <typeFullName>
+      <string>brake_light</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>348af059117df7e4fa6c2bc58e8630dd</guid>
+    <fileName>Assets/Cartoon SportCar B01/script/on_off_light.cs</fileName>
+    <timeStamp>2022-05-10T11:14:44+02:00</timeStamp>
+    <typeFullName>
+      <string>on_off_light</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>834e6931256c5a6449a6cb839e6a8dc5</guid>
+    <fileName>Assets/Cartoon SportCar B01/script/OpenElement.cs</fileName>
+    <timeStamp>2016-05-13T11:19:36+02:00</timeStamp>
+    <typeFullName>
+      <string>OpenElement</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>842f43ac94b4b4f72ac0898650ddcc44</guid>
+    <fileName>Assets/Cleaner/Editor/AssetCollector.cs</fileName>
+    <timeStamp>2015-12-09T19:51:26+01:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>805140a4856714e288ea84985d3023df</guid>
+    <fileName>Assets/Cleaner/Editor/AssetReferenceCollection.cs</fileName>
+    <timeStamp>2015-12-09T19:51:26+01:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>202c278a17939b24c8b79c0ee1f94d8f</guid>
+    <fileName>Assets/Cleaner/Editor/ClassReferenceCollection.cs</fileName>
+    <timeStamp>2015-12-09T19:51:26+01:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>0d05386265df34bac8d0b6df44aa494c</guid>
+    <fileName>Assets/Cleaner/Editor/CollectionData.cs</fileName>
+    <timeStamp>2015-12-09T19:51:26+01:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>74eec3bfba0594259ac2843353c082a3</guid>
+    <fileName>Assets/Cleaner/Editor/FindUnusedAssetsWindow.cs</fileName>
+    <timeStamp>2015-12-09T19:51:26+01:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>2c4f01a79a77a45a9a84004cc2b78098</guid>
+    <fileName>Assets/Cleaner/Editor/ShaderReferenceCollection.cs</fileName>
+    <timeStamp>2015-12-09T19:51:26+01:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>15591c547998f4e47a2e8ce9ac3d3a73</guid>
+    <fileName>Assets/EZ Camera Shake/Scripts/CameraShakeInstance.cs</fileName>
+    <timeStamp>2016-06-07T01:31:20+02:00</timeStamp>
+    <typeFullName>
+      <string>EZCameraShake.CameraShakeState</string>
+      <string>EZCameraShake.CameraShakeInstance</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>2ab8353b5ebd32545867da143199a814</guid>
+    <fileName>Assets/EZ Camera Shake/Scripts/CameraShaker.cs</fileName>
+    <timeStamp>2019-05-08T21:52:18+02:00</timeStamp>
+    <typeFullName>
+      <string>EZCameraShake.CameraShaker</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>5eebeb0be12630947983c46c4641a0b5</guid>
+    <fileName>Assets/EZ Camera Shake/Scripts/Utilities/CameraUtilities.cs</fileName>
+    <timeStamp>2016-06-07T01:31:20+02:00</timeStamp>
+    <typeFullName>
+      <string>EZCameraShake.CameraUtilities</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>9bbaeea73a0d3cb41b4dd70d0485e5b5</guid>
+    <fileName>Assets/FlexibleCelShader/Editor/PresetDataConainer.cs</fileName>
+    <timeStamp>2020-11-24T07:28:24+01:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>09021af69d1da38458f3c30246e57b76</guid>
+    <fileName>Assets/FlexibleCelShader/Editor/PresetHelper.cs</fileName>
+    <timeStamp>2020-11-24T07:28:20+01:00</timeStamp>
+    <typeFullName />
+  </TypeDate>
+  <TypeDate>
+    <guid>3a883da16a4f67b4bb4b426cc3fa6bf0</guid>
+    <fileName>Assets/Scripts/GameController.cs</fileName>
+    <timeStamp>2022-05-01T23:59:26+02:00</timeStamp>
+    <typeFullName>
+      <string>GameController</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>9f4667622914ce749ac57e451f41f3c6</guid>
+    <fileName>Assets/Scripts/GoalController.cs</fileName>
+    <timeStamp>2022-05-05T13:22:44+02:00</timeStamp>
+    <typeFullName>
+      <string>GoalController</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>c7577aa354ee9ee478029d61ad97e4a6</guid>
+    <fileName>Assets/Scripts/RadioManager.cs</fileName>
+    <timeStamp>2022-05-02T00:31:42+02:00</timeStamp>
+    <typeFullName>
+      <string>RadioManager</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>999abc466627595459704a2d2be0e0f3</guid>
+    <fileName>Assets/Scripts/TutorialSign.cs</fileName>
+    <timeStamp>2022-05-10T14:23:48+02:00</timeStamp>
+    <typeFullName>
+      <string>TutorialSign</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>4eec1567462afe745a4332fd12ff473e</guid>
+    <fileName>Assets/Scripts/Audio/AudioController.cs</fileName>
+    <timeStamp>2022-05-02T00:14:16+02:00</timeStamp>
+    <typeFullName>
+      <string>AudioController</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>202a51fd0a159bb488f37c53afc739cb</guid>
+    <fileName>Assets/Scripts/Audio/Sound.cs</fileName>
+    <timeStamp>2022-04-05T10:13:12+02:00</timeStamp>
+    <typeFullName>
+      <string>Sound</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>541f3e790ddccbf4381bf122ac1f98b8</guid>
+    <fileName>Assets/Scripts/Car/CarCollision.cs</fileName>
+    <timeStamp>2022-05-10T14:34:30+02:00</timeStamp>
+    <typeFullName>
+      <string>CarCollision</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>e67598d2dfa4c7a428e0c27e7fd06bc1</guid>
+    <fileName>Assets/Scripts/Car/CarController.cs</fileName>
+    <timeStamp>2022-06-04T16:36:44.668302+02:00</timeStamp>
+    <typeFullName>
+      <string>CarController</string>
+      <string>CarController+CarOff</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>2a26e3d7ace1aa94494fc64f2858f594</guid>
+    <fileName>Assets/Scripts/Car/CarInputs.cs</fileName>
+    <timeStamp>2022-05-01T14:34:48+02:00</timeStamp>
+    <typeFullName>
+      <string>CarInputs</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>8926d6ece097aa14794d1d73941ab5a3</guid>
+    <fileName>Assets/Scripts/Car/CarMovement.cs</fileName>
+    <timeStamp>2022-05-10T13:55:04+02:00</timeStamp>
+    <typeFullName>
+      <string>CarMovement</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+  <TypeDate>
+    <guid>b8fb49fd15972e94e968a60bc8a870d9</guid>
+    <fileName>Assets/Scripts/Menus/EndLevelCanvas.cs</fileName>
+    <timeStamp>2022-05-05T12:38:22+02:00</timeStamp>
+    <typeFullName>
+      <string>EndLevelCanvas</string>
+    </typeFullName>
+    <assemblly>Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</assemblly>
+  </TypeDate>
+</ArrayOfTypeDate>

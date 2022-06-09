@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using XInputDotNetPure;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class CarMovement : MonoBehaviour {
   GameController gm_instance_;
@@ -9,6 +10,7 @@ public class CarMovement : MonoBehaviour {
 
   [Header("Car settings")]
   public float max_acceleration_;
+  public float max_brake_force_;
   public float max_speed_time_;
   public float max_turn_angle_;
   public float max_wheel_turns_;
@@ -18,25 +20,25 @@ public class CarMovement : MonoBehaviour {
   public float car_fuel_consumption_;
   float car_fuel_;
   float car_max_fuel_ = 100.0f;
-  float saved_fuel_ = 100.0f;
 
   float reverse_multiplier_ = 1.0f;
 
   float current_acceleration_ = 0f;
   float current_wheel_angle_ = 0f;
   float current_turn_angle_ = 0f;
-  float current_break_force_ = 0f;
+  float current_brake_force_ = 0f;
 
   float saved_wheel_angle_ = 0f;
 
   float max_speed_passed_time_ = 0f;
 
-  float wheel_correction_time_ = 1.0f;
+  public float wheel_correction_time_ = 1.0f;
+  float wheel_correction_time_backup_;
+
+  float last_wheel_correction_time_;
   float wheel_correction_passed_time_ = 0.0f;
 
   bool hand_braking_ = false;
-
-  public float parking_timer_ = 0.0f;
 
   Vector2 current_wheel_vector_;
   Vector2 last_wheel_vector_;
@@ -51,47 +53,37 @@ public class CarMovement : MonoBehaviour {
 
     current_wheel_vector_ = Vector3.zero;
     last_wheel_vector_ = Vector3.zero;
+
+    wheel_correction_time_backup_ = wheel_correction_time_;
   }
 
   void Update() {
     if (car_controller_.car_on()) {
-      parking_timer_ += Time.deltaTime;
-      float ver_axis = 0.0f;
-      if (car_controller_.car_inputs().left_joystick_vertical() > 0.0f) ver_axis = car_controller_.car_inputs().left_joystick_vertical();
-      ver_axis *= reverse_multiplier_;
+      float acceleration_axis = 0.0f;
+      float brake_axis = 0.0f;
 
-      if (!hand_braking_)
-        AccelerateCar(ver_axis);
+      if (car_controller_.car_inputs().accelerate_car_axis() > 0.0f) acceleration_axis = car_controller_.car_inputs().accelerate_car_axis();
+      if (car_controller_.car_inputs().brake_car_axis() < 0.0f) brake_axis = car_controller_.car_inputs().brake_car_axis();
+      acceleration_axis *= reverse_multiplier_;
+
+      if (!hand_braking_) { 
+        AccelerateCar(acceleration_axis);
+        BrakeCar(brake_axis);
+      }
 
       TurnWheels();
       UpdateWheels();
-
-      ChangeDirection();
-      HandBrake();
-
-      if (current_acceleration_ > 0.0f) {
-        if (current_wheel_vector_.magnitude == 0.0f) {
-          if (current_wheel_angle_ != 0.0f) {
-            CorrectWheels();
-
-          } else {
-            wheel_correction_passed_time_ = 0.0f;
-          }
-        } else {
-          wheel_correction_passed_time_ = 0.0f;
-          saved_wheel_angle_ = current_wheel_angle_;
-        }
-      }
+      CorrectWheels();
 
       if (!gm_instance_.audio_controller_ref_.IsPlaying("Engine_sound")) {
         gm_instance_.audio_controller_ref_.PlaySoundEffect("Engine_sound");
 
       } else {
         Sound s = gm_instance_.audio_controller_ref_.GetSoundEffect("Engine_sound");
-        s.source.pitch = Mathf.Clamp(1.0f + ver_axis, 1.0f, 2.0f);
+        s.source.pitch = Mathf.Clamp(1.0f + acceleration_axis, 1.0f, 2.0f);
       }
 
-      CapCarSpeed();
+      LimitCarSpeed();
 
     } else {
       gm_instance_.audio_controller_ref_.Stop("Engine_sound");
@@ -99,41 +91,35 @@ public class CarMovement : MonoBehaviour {
     }
   }
 
-  void AccelerateCar(float ver_axis) {
+  void AccelerateCar(float acceleration_axis) {
     if (max_speed_passed_time_ < max_speed_time_) {
       max_speed_passed_time_ += Time.deltaTime;
     }
 
     float real_acceleration = max_acceleration_;
-    if (ver_axis < 0.0f) real_acceleration = max_acceleration_ * 0.5f;
-    current_acceleration_ = real_acceleration * ver_axis * (max_speed_passed_time_ / max_speed_time_);      
-    if (car_controller_.car_inputs().left_joystick_vertical() <= 0.0f) max_speed_passed_time_ = 0.0f;
+    if (acceleration_axis < 0.0f) real_acceleration = max_acceleration_ * 0.5f;
+    current_acceleration_ = real_acceleration * acceleration_axis * (max_speed_passed_time_ / max_speed_time_);  
+    
+    if (car_controller_.car_inputs().accelerate_car_axis() <= 0.0f) max_speed_passed_time_ = 0.0f;
 
-    if (ver_axis != 0.0f) {
+    if (acceleration_axis != 0.0f) {
       car_fuel_ -= ((car_fuel_consumption_ / 100.0f) * car_max_fuel_);
       car_fuel_ = Mathf.Clamp(car_fuel_, 20.0f, car_max_fuel_);
     }
 
     if (car_controller_.car_on()) {
-      GamePad.SetVibration(0, ver_axis * 0.5f, ver_axis * 0.5f);
+      GamePad.SetVibration(0, acceleration_axis * 0.5f, acceleration_axis * 0.5f);
     }
   }
 
-  void ChangeDirection() {
-    if (car_controller_.car_inputs().right_joystick_press()) {
-      reverse_multiplier_ *= -1.0f;
-
-      if (reverse_multiplier_ < 0.0f) {
-        gm_instance_.audio_controller_ref_.PlaySoundEffect("Reverse_mode");
-      } else {
-        gm_instance_.audio_controller_ref_.PlaySoundEffect("Directional_mode");        
-      }
-    }
+  void BrakeCar(float brake_axis) {
+    current_brake_force_ = Mathf.Lerp(0.0f, max_brake_force_, Mathf.Abs(brake_axis));
+    if (car_controller_.car_inputs().accelerate_car_axis() == 0.0f) current_brake_force_ += 100.0f;
   }
 
   void TurnWheels() {
-    current_wheel_vector_.x = car_controller_.car_inputs().right_joystick_horizontal();
-    current_wheel_vector_.y = car_controller_.car_inputs().right_joystick_vertical();
+    current_wheel_vector_.x = car_controller_.car_inputs().left_joystick_horizontal();
+    current_wheel_vector_.y = car_controller_.car_inputs().left_joystick_vertical();
 
     if (last_wheel_vector_ != current_wheel_vector_) {
 
@@ -152,51 +138,61 @@ public class CarMovement : MonoBehaviour {
     }
   }
 
+  //Wheel auto correction while the player is driving, to keep the wheels pointing forward
   void CorrectWheels() {
-    if (wheel_correction_passed_time_ < wheel_correction_time_) {
-      wheel_correction_passed_time_ += Time.deltaTime;
+    if (current_acceleration_ > 0.0f) {
+      if (current_wheel_vector_.magnitude == 0.0f) {
+          
+          last_wheel_correction_time_ = (max_acceleration_ * wheel_correction_time_backup_) / current_acceleration_;
 
-      current_wheel_angle_ = Mathf.Lerp(saved_wheel_angle_, 0.0f, wheel_correction_passed_time_ / wheel_correction_time_);
+          //Updating the correction passed time percentage to it's new value
+          //(this is needed because if the target time changes, the passed time no longer corresponds to the same percentage,
+          //so we need to adapt the passed time to keep the same percentage of passed time.)
+          if (last_wheel_correction_time_ != wheel_correction_time_) {
+            float percentage_passed = wheel_correction_passed_time_ / wheel_correction_time_;
 
-      Quaternion steering = car_controller_.steering_wheel_tr_.rotation;
-      steering *= Quaternion.Euler(0, current_wheel_angle_, 0);
-      car_controller_.steering_wheel_tr_.rotation = steering;
-    }
-  }
+            wheel_correction_time_ = last_wheel_correction_time_;
+            wheel_correction_passed_time_ = wheel_correction_time_ * percentage_passed;
+          }
 
-  void HandBrake() {
-    if (car_controller_.car_inputs().left_joystick_press()) {
-      hand_braking_ = !hand_braking_;
+          if (wheel_correction_passed_time_ < wheel_correction_time_) {
+            wheel_correction_passed_time_ += Time.deltaTime;
 
-      if (hand_braking_) {
-        gm_instance_.audio_controller_ref_.PlaySoundEffect("Handbrake_on");
+            current_wheel_angle_ = Mathf.Lerp(saved_wheel_angle_, 0.0f, wheel_correction_passed_time_ / wheel_correction_time_);
+
+            Quaternion steering = car_controller_.steering_wheel_tr_.rotation;
+            steering *= Quaternion.Euler(0, current_wheel_angle_, 0);
+            car_controller_.steering_wheel_tr_.rotation = steering;
+          }
+
       } else {
-        gm_instance_.audio_controller_ref_.PlaySoundEffect("Handbrake_off");
+        wheel_correction_passed_time_ = 0.0f;
+        saved_wheel_angle_ = current_wheel_angle_;
       }
+    } else {
+      wheel_correction_passed_time_ = 0.0f;
+      saved_wheel_angle_ = current_wheel_angle_;
     }
 
-    if (hand_braking_) {
-      current_break_force_ = 100000f;
-    }
   }
 
   void UpdateWheels() {
-    float ver_axis_raw = Input.GetAxisRaw("JoystickVer");
+    float ver_axis_raw = car_controller_.car_inputs().accelerate_car_raw_axis();
 
     car_controller_.back_right().motorTorque = current_acceleration_;
     car_controller_.back_left().motorTorque = current_acceleration_;
 
     if (!hand_braking_) {
-      car_controller_.front_right().brakeTorque = current_break_force_;
-      car_controller_.front_left().brakeTorque = current_break_force_;
+      car_controller_.front_right().brakeTorque = current_brake_force_;
+      car_controller_.front_left().brakeTorque = current_brake_force_;
     }
     
-    car_controller_.back_right().brakeTorque = current_break_force_;
-    car_controller_.back_left().brakeTorque = current_break_force_;
+    car_controller_.back_right().brakeTorque = current_brake_force_;
+    car_controller_.back_left().brakeTorque = current_brake_force_;
 
-    if (ver_axis_raw <= 0.0f) current_break_force_ += 300f;
-    else current_break_force_ = 0.0f;
-    current_break_force_ = Mathf.Clamp(current_break_force_, 0.0f, breaking_force_);
+    if (ver_axis_raw <= 0.0f) current_brake_force_ += 300f;
+    else current_brake_force_ = 0.0f;
+    current_brake_force_ = Mathf.Clamp(current_brake_force_, 0.0f, breaking_force_);
 
     car_controller_.front_left().steerAngle = current_turn_angle_;
     car_controller_.front_right().steerAngle = current_turn_angle_;
@@ -217,7 +213,7 @@ public class CarMovement : MonoBehaviour {
     tr.rotation = rotation;
   }
 
-  void CapCarSpeed() {
+  void LimitCarSpeed() {
     if (car_controller_.car_rb().velocity.magnitude > (max_acceleration_ / 10.0f)) {
       car_controller_.car_rb().velocity = Vector3.ClampMagnitude(car_controller_.car_rb().velocity, max_acceleration_ / 10.0f);
     }
@@ -226,16 +222,14 @@ public class CarMovement : MonoBehaviour {
     }
   }
 
+  #region getters
+  //-------------- GETTERS --------------//
   public float current_acceleration() {
     return current_acceleration_;
   }
 
   public float car_fuel() {
     return car_fuel_;
-  }
-
-  public void set_car_fuel(float fuel) {
-    car_fuel_ = fuel;
   }
 
   public float car_max_fuel() {
@@ -249,4 +243,30 @@ public class CarMovement : MonoBehaviour {
   public bool hand_braking() {
     return hand_braking_;
   }
+
+  public float current_brake_force() {
+    return current_brake_force_;
+  }
+  //-------------------------------------//
+  #endregion
+
+  #region setters
+  //-------------- SETTERS --------------//
+  public void set_car_fuel(float fuel) {
+    car_fuel_ = fuel;
+  }
+
+  public void set_reverse_multiplier(float value) {
+    reverse_multiplier_ = value;
+  }
+
+  public void set_hand_braking(bool value) {
+    hand_braking_ = value;
+  }
+
+  public void set_current_brake_force(float value) {
+    current_brake_force_ = value;
+  }
+  //-------------------------------------//
+  #endregion
 }

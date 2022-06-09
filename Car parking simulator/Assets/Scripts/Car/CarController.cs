@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 using XInputDotNetPure;
+using EZCameraShake;
 
 public class CarController : MonoBehaviour {
   GameController gm_instance_;
@@ -11,6 +11,7 @@ public class CarController : MonoBehaviour {
   CarInputs car_inputs_;
   CarMovement car_movement_;
   CarCollision car_collisions_;
+  public GameObject car_canvas_;
 
   [Header("Wheel colliders")]
   public Transform wheel_colliders_parent_;
@@ -30,29 +31,32 @@ public class CarController : MonoBehaviour {
   public Transform steering_wheel_tr_;
 
   [Header("Car settings")]
+  [Range(-1.0f, 1.0f)]
   public float car_mass_center_;
   public float engine_start_time_;
-
-  [Header("Head rotation settings")]
-  public float head_left_angle_;
-  public float head_right_angle_;
-  float current_head_angle_ = 0f;
-  float last_head_angle_ = 0f;
-  public float rotating_head_time_;
-  float rotating_head_passed_time_ = 0f;
-  Quaternion camera_default_rotation_;
-  Vector2 rotating_head_axis_;
-
-  [Header("Car FOV values")]
-  public float min_fov_;
-  public float max_fov_;
-  public float fov_time_;
-
-  public int number_of_collisions_ = 0;
+  public bool car_lights_on_;
+  public float parking_timer_ = 0.0f;
 
   // Internal variables  
   bool can_start_engine_ = true;
   bool car_on_ = false;
+  int number_of_collisions_ = 0;
+
+  [Header("Head rotation settings")]
+  [Range(-90, 90)]
+  public float head_left_angle_;
+  [Range(-90, 90)]
+  public float head_right_angle_;
+  [Tooltip("Head rotation duration in seconds.")]
+  public float rotating_head_time_;
+
+  // Head rotation internal variables
+  float current_head_angle_ = 0f;
+  float last_head_angle_ = 0f;
+  float rotating_head_passed_time_ = 0f;
+
+  Quaternion camera_default_rotation_;
+  Vector2 rotating_head_axis_;
 
   // Timers
   float engine_start_passed_time_ = 0.0f;
@@ -75,16 +79,13 @@ public class CarController : MonoBehaviour {
 
   Rigidbody car_rb_;
   public Camera main_camera_;
-
-  bool vibrating_car_ = false;
   
-  // Input private variables
-
   public delegate void CarOff();
   public event CarOff OnCarOff;
 
   void Awake() {
     car_inputs_ = GetComponent<CarInputs>();
+    car_inputs_.init(this);
 
     car_movement_ = GetComponent<CarMovement>();
     car_movement_.init(this);
@@ -111,19 +112,25 @@ public class CarController : MonoBehaviour {
 
   void Start() {
     gm_instance_ = GameController.gm_instance_;
+    gm_instance_.car_reference_ = this;
+
     car_rb_.centerOfMass = new Vector3(0, car_mass_center_, 0);
+
+    GetComponent<on_off_light>().TurnLights(car_lights_on_);
+    direction_layout_.material = direction_layout_mats_[0];
   }
 
   void Update() {
+    parking_timer_ += Time.deltaTime;
+
     StartCarEngine();
-    SetDirectionalMaterial();
     RotateHead();
     UpdateSpeedMeterArrow();
   }
 
   void RotateHead() {
-    rotating_head_axis_.x = car_inputs_.left_joystick_horizontal();
-    rotating_head_axis_.y = car_inputs_.left_joystick_vertical();   
+    rotating_head_axis_.x = car_inputs_.right_joystick_horizontal();
+    rotating_head_axis_.y = car_inputs_.right_joystick_vertical();   
     float hor_axis = rotating_head_axis_.x;
 
     float dot_result = Mathf.Abs(Vector2.Dot(-rotating_head_axis_.normalized, Vector2.right));
@@ -162,12 +169,12 @@ public class CarController : MonoBehaviour {
   }
 
   void StartCarEngine() {
-    if (car_inputs().left_joystick_vertical() == -1.0f) {
+    if (car_inputs().right_joystick_vertical() == -1.0f) {
       if (can_start_engine_) {
         if (engine_start_passed_time_ < engine_start_time_) {
           engine_start_passed_time_ += Time.deltaTime;
           
-          GamePad.SetVibration(0, car_inputs().left_joystick_vertical() * -0.3f, car_inputs().left_joystick_vertical() * -0.3f);
+          GamePad.SetVibration(0, car_inputs().right_joystick_vertical() * -0.3f, car_inputs().right_joystick_vertical() * -0.3f);
           if (!car_on_) {
             if (!gm_instance_.audio_controller_ref_.IsPlaying("Car_ignition")) {
               gm_instance_.audio_controller_ref_.PlaySoundEffect("Car_ignition");
@@ -187,9 +194,10 @@ public class CarController : MonoBehaviour {
             StartCoroutine(FuelMeterFill());
 
             GameController.gm_instance_.radio_manager_ref_.StartRadio();
+            CameraShaker.Instance.ShakeOnce(0.1f, 5.5f, 0.5f, 2.5f);
           } else {
             gm_instance_.audio_controller_ref_.PlaySoundEffect("Engine_off");
-
+            CameraShaker.Instance.ShakeOnce(0.1f, 2.0f, 0.5f, 1.5f);
 
             StartCoroutine(CarOffVibration());
             OnCarOff();
@@ -207,6 +215,7 @@ public class CarController : MonoBehaviour {
     }
   }
 
+  //MOVE TO FEEL SCRIPT
   void UpdateSpeedMeterArrow() {
     RectTransform engine_arrow_t = engine_speed_meter_arrow_.GetComponent<RectTransform>();
     RectTransform car_arrow_t = car_speed_meter_arrow_.GetComponent<RectTransform>();
@@ -225,14 +234,7 @@ public class CarController : MonoBehaviour {
     hand_brake_light_.SetActive(car_movement_.hand_braking());
   }
 
-  void SetDirectionalMaterial() {
-   if (car_movement_.reverse_multiplier() > 0.0f) {
-      direction_layout_.material = direction_layout_mats_[0];
-    } else {
-      direction_layout_.material = direction_layout_mats_[1];     
-    }
-  }
-
+  //MOVE TO FEEL SCRIPT
   IEnumerator FuelMeterFill() {
     for (int i = 0; i < car_movement_.car_max_fuel(); i++) {
       car_movement_.set_car_fuel(i);
@@ -240,6 +242,7 @@ public class CarController : MonoBehaviour {
     }
   }
 
+  //MOVE TO FEEL SCRIPT
   IEnumerator CarOnVibration() {
     car_on_ = false;
     GamePad.SetVibration(0, 0.8f, 0.8f);
@@ -248,12 +251,15 @@ public class CarController : MonoBehaviour {
     car_on_ = true;
   }
 
+  //MOVE TO FEEL SCRIPT
   IEnumerator CarOffVibration() {
     GamePad.SetVibration(0, 0.6f, 0.6f);
     yield return new WaitForSeconds(1.0f);
     GamePad.SetVibration(0, 0.0f, 0.0f);
   }
 
+  #region getters
+  //-------------- GETTERS --------------//
   public CarInputs car_inputs() {
     return car_inputs_;
   }
@@ -301,4 +307,31 @@ public class CarController : MonoBehaviour {
   public bool car_on() {
     return car_on_;
   }
+
+  public int number_of_collisions() {
+    return number_of_collisions_;
+  }
+
+  public Vector2 rotating_head_axis() {
+    return rotating_head_axis_;
+  }
+
+  public bool car_lights_on() {
+    return car_lights_on_;
+  }
+  //-------------------------------------//
+  #endregion
+
+  #region setters
+  //-------------- SETTERS --------------//
+  public void add_collisions(int value) {
+    number_of_collisions_ += value;
+  }
+
+  public void set_car_lights(bool value) {
+    car_lights_on_ = value;
+    GetComponent<on_off_light>().TurnLights(car_lights_on_);
+  }
+  //-------------------------------------//
+  #endregion
 }
