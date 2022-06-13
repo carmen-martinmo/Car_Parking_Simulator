@@ -1291,6 +1291,7 @@ MonoBehaviour:
   head_left_angle_: -45
   head_right_angle_: 75
   rotating_head_time_: 0.1
+  vibration_time_: 3
   engine_speed_meter_arrow_: {fileID: 1643829169}
   car_speed_meter_arrow_: {fileID: 2039547505}
   fuel_arrow_: {fileID: 139330036}
@@ -1316,12 +1317,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8926d6ece097aa14794d1d73941ab5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_acceleration_: 400
-  max_brake_force_: 1000
-  max_speed_time_: 2
+  max_acceleration_: 800
+  max_brake_force_: 2000
+  max_acceleration_time_: 4
   max_turn_angle_: 45
   max_wheel_turns_: 1.5
-  breaking_force_: 1000
+  breaking_force_: 2000
+  acceleration_curve_:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   car_fuel_consumption_: 0.01
   wheel_correction_time_: 1
 --- !u!114 &3176183810444825114

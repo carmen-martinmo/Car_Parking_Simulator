@@ -55,6 +55,9 @@ public class CarController : MonoBehaviour {
   float last_head_angle_ = 0f;
   float rotating_head_passed_time_ = 0f;
 
+  public float vibration_time_;
+  float current_vibration_time_;
+
   Quaternion camera_default_rotation_;
   Vector2 rotating_head_axis_;
 
@@ -126,6 +129,9 @@ public class CarController : MonoBehaviour {
     StartCarEngine();
     RotateHead();
     UpdateSpeedMeterArrow();
+
+    //Reset engine vibration
+    if (car_inputs_.accelerate_car_axis() <= 0.0f) current_vibration_time_ = vibration_time_;
   }
 
   void RotateHead() {
@@ -209,7 +215,13 @@ public class CarController : MonoBehaviour {
       can_start_engine_ = true;
       gm_instance_.audio_controller_ref_.Stop("Car_ignition");
 
-      if (!car_on_) {
+      if (car_on_) {
+        current_vibration_time_ = Mathf.Clamp(current_vibration_time_ - Time.deltaTime, 0.0f, vibration_time_);
+        float vibration_value = Mathf.Clamp((car_movement().current_acceleration() / car_movement().max_acceleration_) * current_vibration_time_, 0.0f, 0.5f);
+
+        GamePad.SetVibration(0, vibration_value, vibration_value);
+      } else { 
+        current_vibration_time_ = vibration_time_;
         GamePad.SetVibration(0, 0.0f, 0.0f);
       }
     }

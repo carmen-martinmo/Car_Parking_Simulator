@@ -11,10 +11,11 @@ public class CarMovement : MonoBehaviour {
   [Header("Car settings")]
   public float max_acceleration_;
   public float max_brake_force_;
-  public float max_speed_time_;
+  public float max_acceleration_time_;
   public float max_turn_angle_;
   public float max_wheel_turns_;
   public float breaking_force_;
+  public AnimationCurve acceleration_curve_;
 
   [Header("Fuel settings")]
   public float car_fuel_consumption_;
@@ -30,7 +31,9 @@ public class CarMovement : MonoBehaviour {
 
   float saved_wheel_angle_ = 0f;
 
-  float max_speed_passed_time_ = 0f;
+  float max_acceleration_passed_time_ = 0f;
+  float max_acceleration_time_backup_;
+  float last_max_acceleration_time_;
 
   public float wheel_correction_time_ = 1.0f;
   float wheel_correction_time_backup_;
@@ -55,6 +58,7 @@ public class CarMovement : MonoBehaviour {
     last_wheel_vector_ = Vector3.zero;
 
     wheel_correction_time_backup_ = wheel_correction_time_;
+    max_acceleration_time_backup_ = max_acceleration_time_;
   }
 
   void Update() {
@@ -64,7 +68,6 @@ public class CarMovement : MonoBehaviour {
 
       if (car_controller_.car_inputs().accelerate_car_axis() > 0.0f) acceleration_axis = car_controller_.car_inputs().accelerate_car_axis();
       if (car_controller_.car_inputs().brake_car_axis() < 0.0f) brake_axis = car_controller_.car_inputs().brake_car_axis();
-      acceleration_axis *= reverse_multiplier_;
 
       if (!hand_braking_) { 
         AccelerateCar(acceleration_axis);
@@ -74,6 +77,7 @@ public class CarMovement : MonoBehaviour {
       TurnWheels();
       UpdateWheels();
       CorrectWheels();
+      LimitCarSpeed();
 
       if (!gm_instance_.audio_controller_ref_.IsPlaying("Engine_sound")) {
         gm_instance_.audio_controller_ref_.PlaySoundEffect("Engine_sound");
@@ -83,8 +87,6 @@ public class CarMovement : MonoBehaviour {
         s.source.pitch = Mathf.Clamp(1.0f + acceleration_axis, 1.0f, 2.0f);
       }
 
-      LimitCarSpeed();
-
     } else {
       gm_instance_.audio_controller_ref_.Stop("Engine_sound");
 
@@ -92,23 +94,29 @@ public class CarMovement : MonoBehaviour {
   }
 
   void AccelerateCar(float acceleration_axis) {
-    if (max_speed_passed_time_ < max_speed_time_) {
-      max_speed_passed_time_ += Time.deltaTime;
+    last_max_acceleration_time_ = max_acceleration_time_backup_ * (Mathf.Abs(acceleration_axis) + 0.01f);
+
+    if (last_max_acceleration_time_ != max_acceleration_time_) {
+      float percentage_passed = max_acceleration_passed_time_ / max_acceleration_time_;
+
+      if (last_max_acceleration_time_ < max_acceleration_time_) max_acceleration_passed_time_ = last_max_acceleration_time_ * percentage_passed;
+      max_acceleration_time_ = last_max_acceleration_time_;
+    }
+
+    if (max_acceleration_passed_time_ < max_acceleration_time_) {
+      max_acceleration_passed_time_ += Time.deltaTime;
     }
 
     float real_acceleration = max_acceleration_;
     if (acceleration_axis < 0.0f) real_acceleration = max_acceleration_ * 0.5f;
-    current_acceleration_ = real_acceleration * acceleration_axis * (max_speed_passed_time_ / max_speed_time_);  
-    
-    if (car_controller_.car_inputs().accelerate_car_axis() <= 0.0f) max_speed_passed_time_ = 0.0f;
+    current_acceleration_ = real_acceleration * acceleration_curve_.Evaluate((max_acceleration_passed_time_ / max_acceleration_time_) * acceleration_axis);  
+    current_acceleration_ = Mathf.Clamp(current_acceleration_ * reverse_multiplier_, -max_acceleration_, max_acceleration_);
+
+    if (car_controller_.car_inputs().accelerate_car_axis() <= 0.0f) max_acceleration_passed_time_ = 0.0f;
 
     if (acceleration_axis != 0.0f) {
       car_fuel_ -= ((car_fuel_consumption_ / 100.0f) * car_max_fuel_);
       car_fuel_ = Mathf.Clamp(car_fuel_, 20.0f, car_max_fuel_);
-    }
-
-    if (car_controller_.car_on()) {
-      GamePad.SetVibration(0, acceleration_axis * 0.5f, acceleration_axis * 0.5f);
     }
   }
 
@@ -161,7 +169,7 @@ public class CarMovement : MonoBehaviour {
             current_wheel_angle_ = Mathf.Lerp(saved_wheel_angle_, 0.0f, wheel_correction_passed_time_ / wheel_correction_time_);
 
             Quaternion steering = car_controller_.steering_wheel_tr_.rotation;
-            steering *= Quaternion.Euler(0, current_wheel_angle_, 0);
+            steering *= Quaternion.Euler(0, current_wheel_angle_ * (car_controller_.car_inputs().accelerate_car_axis() * 0.2f), 0);
             car_controller_.steering_wheel_tr_.rotation = steering;
           }
 
@@ -192,7 +200,7 @@ public class CarMovement : MonoBehaviour {
 
     if (ver_axis_raw <= 0.0f) current_brake_force_ += 300f;
     else current_brake_force_ = 0.0f;
-    current_brake_force_ = Mathf.Clamp(current_brake_force_, 0.0f, breaking_force_);
+    current_brake_force_ = Mathf.Clamp(current_brake_force_, 0.0f, max_brake_force_);
 
     car_controller_.front_left().steerAngle = current_turn_angle_;
     car_controller_.front_right().steerAngle = current_turn_angle_;
