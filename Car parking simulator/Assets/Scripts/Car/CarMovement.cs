@@ -9,42 +9,57 @@ public class CarMovement : MonoBehaviour {
   CarController car_controller_;
 
   [Header("Car settings")]
+
+  [Header("Acceleration")]
+  [Tooltip("Used for the directional mode of the car. Must be a positive number.")]
   public float max_acceleration_;
-  public float max_brake_force_;
+  [Tooltip("Used for the reverse mode of the car. Must be a negative number.")]
+  public float min_acceleration_;
+  [Tooltip("Time needed to reach maximum acceleration with the trigger fully hold.")]
   public float max_acceleration_time_;
+
+  [Header("Braking")]
+  [Tooltip("Max brake force used with the hand brake or the brake pedal.")]
+  public float max_brake_force_;
+  [Tooltip("Passive brake force applied when you are not accelerating.")]
+  public float max_passive_brake_force_;
+
+  [Header("Wheels")]
+  public float wheel_correction_time_;
+  [Tooltip("Max turning angle of the wheels for each side.")]
   public float max_turn_angle_;
-  public float max_wheel_turns_;
-  public float breaking_force_;
+  [Tooltip("Number of turns needed from default position (0 degrees) to any side.")]
+  public float max_steering_wheel_turns_;
+  [Tooltip("Acceleration curve for the car.")]
   public AnimationCurve acceleration_curve_;
 
   [Header("Fuel settings")]
+  [Tooltip("Fuel consumption percentage each frame. (This number gets divided by 100.0f before the fuel consumption operation).")]
   public float car_fuel_consumption_;
   float car_fuel_;
   float car_max_fuel_ = 100.0f;
 
-  float reverse_multiplier_ = 1.0f;
-
+  //Internal acceleration values
   float current_acceleration_ = 0f;
-  float current_wheel_angle_ = 0f;
-  float current_turn_angle_ = 0f;
-  float current_brake_force_ = 0f;
-
-  float saved_wheel_angle_ = 0f;
-
   float max_acceleration_passed_time_ = 0f;
   float max_acceleration_time_backup_;
   float last_max_acceleration_time_;
+  float reverse_multiplier_ = 1.0f;
 
-  public float wheel_correction_time_ = 1.0f;
+  //Internal wheel control values
+  float current_wheel_angle_ = 0f;
   float wheel_correction_time_backup_;
-
   float last_wheel_correction_time_;
   float wheel_correction_passed_time_ = 0.0f;
-
-  bool hand_braking_ = false;
+  float current_turn_angle_ = 0f;
+  float saved_wheel_angle_ = 0f;
 
   Vector2 current_wheel_vector_;
   Vector2 last_wheel_vector_;
+
+  //Internal brake values
+  float current_brake_force_ = 0f;
+  bool hand_braking_ = false;
 
   public void init(CarController reference) {
     car_controller_ = reference;
@@ -110,7 +125,7 @@ public class CarMovement : MonoBehaviour {
     float real_acceleration = max_acceleration_;
     if (acceleration_axis < 0.0f) real_acceleration = max_acceleration_ * 0.5f;
     current_acceleration_ = real_acceleration * acceleration_curve_.Evaluate((max_acceleration_passed_time_ / max_acceleration_time_) * acceleration_axis);  
-    current_acceleration_ = Mathf.Clamp(current_acceleration_ * reverse_multiplier_, -max_acceleration_, max_acceleration_);
+    current_acceleration_ = Mathf.Clamp(current_acceleration_ * reverse_multiplier_, min_acceleration_, max_acceleration_);
 
     if (car_controller_.car_inputs().accelerate_car_axis() <= 0.0f) max_acceleration_passed_time_ = 0.0f;
 
@@ -122,7 +137,7 @@ public class CarMovement : MonoBehaviour {
 
   void BrakeCar(float brake_axis) {
     current_brake_force_ = Mathf.Lerp(0.0f, max_brake_force_, Mathf.Abs(brake_axis));
-    if (car_controller_.car_inputs().accelerate_car_axis() == 0.0f) current_brake_force_ += 100.0f;
+    if (car_controller_.car_inputs().accelerate_car_axis() == 0.0f) current_brake_force_ += max_passive_brake_force_;
   }
 
   void TurnWheels() {
@@ -132,7 +147,7 @@ public class CarMovement : MonoBehaviour {
     if (last_wheel_vector_ != current_wheel_vector_) {
 
       float angle = Vector2.SignedAngle(last_wheel_vector_, current_wheel_vector_);
-      float variation = (angle * (max_turn_angle_ / (max_wheel_turns_ * 360.0f)));
+      float variation = (angle * (max_turn_angle_ / (max_steering_wheel_turns_ * 360.0f)));
 
       if (current_wheel_angle_ + variation > -max_turn_angle_ && current_wheel_angle_ + variation < max_turn_angle_) {
         Quaternion steering = car_controller_.steering_wheel_tr_.rotation;
@@ -148,10 +163,10 @@ public class CarMovement : MonoBehaviour {
 
   //Wheel auto correction while the player is driving, to keep the wheels pointing forward
   void CorrectWheels() {
-    if (current_acceleration_ > 0.0f) {
+    if (current_acceleration_ != 0.0f) {
       if (current_wheel_vector_.magnitude == 0.0f) {
           
-          last_wheel_correction_time_ = (max_acceleration_ * wheel_correction_time_backup_) / current_acceleration_;
+          last_wheel_correction_time_ = (max_acceleration_ * wheel_correction_time_backup_) / Mathf.Abs(current_acceleration_);
 
           //Updating the correction passed time percentage to it's new value
           //(this is needed because if the target time changes, the passed time no longer corresponds to the same percentage,
@@ -185,22 +200,14 @@ public class CarMovement : MonoBehaviour {
   }
 
   void UpdateWheels() {
-    float ver_axis_raw = car_controller_.car_inputs().accelerate_car_raw_axis();
-
     car_controller_.back_right().motorTorque = current_acceleration_;
     car_controller_.back_left().motorTorque = current_acceleration_;
 
-    if (!hand_braking_) {
-      car_controller_.front_right().brakeTorque = current_brake_force_;
-      car_controller_.front_left().brakeTorque = current_brake_force_;
-    }
+    car_controller_.front_right().brakeTorque = current_brake_force_;
+    car_controller_.front_left().brakeTorque = current_brake_force_;
     
     car_controller_.back_right().brakeTorque = current_brake_force_;
     car_controller_.back_left().brakeTorque = current_brake_force_;
-
-    if (ver_axis_raw <= 0.0f) current_brake_force_ += 300f;
-    else current_brake_force_ = 0.0f;
-    current_brake_force_ = Mathf.Clamp(current_brake_force_, 0.0f, max_brake_force_);
 
     car_controller_.front_left().steerAngle = current_turn_angle_;
     car_controller_.front_right().steerAngle = current_turn_angle_;

@@ -219,6 +219,14 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6869915187173858296, guid: a536cb0003180884eb49048af2eaef85, type: 3}
+      propertyPath: scene_names_.Array.data[0]
+      value: Tutorial_level_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869915187173858296, guid: a536cb0003180884eb49048af2eaef85, type: 3}
+      propertyPath: scene_names_.Array.data[1]
+      value: Tutorial_level_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869915187173858296, guid: a536cb0003180884eb49048af2eaef85, type: 3}
       propertyPath: scene_names_.Array.data[2]
       value: Level_2
       objectReference: {fileID: 0}

@@ -34,12 +34,12 @@ public class CarController : MonoBehaviour {
   [Range(-1.0f, 1.0f)]
   public float car_mass_center_;
   public float engine_start_time_;
-  public bool car_lights_on_;
   public float parking_timer_ = 0.0f;
 
   // Internal variables  
   bool can_start_engine_ = true;
   bool car_on_ = false;
+  bool car_lights_on_;
   int number_of_collisions_ = 0;
 
   [Header("Head rotation settings")]

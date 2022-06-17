@@ -871,8 +871,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score_fill_text_: Score
   fuel_fill_text_: Fuel
+  collisions_fill_text_: 
+  time_fill_text_: 
   score_text_: {fileID: 1083510402548363957}
   fuel_text_: {fileID: 1083510401066617107}
+  collisions_text_: {fileID: 0}
+  time_text_: {fileID: 0}
 --- !u!1 &1083510402548363959
 GameObject:
   m_ObjectHideFlags: 0

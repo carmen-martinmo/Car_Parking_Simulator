@@ -1284,9 +1284,8 @@ MonoBehaviour:
   wheel_colliders_parent_: {fileID: 8900672992479532080}
   wheel_transform_parent_: {fileID: 8900672992018302737}
   steering_wheel_tr_: {fileID: 8900672992018349493}
-  car_mass_center_: 0.6
+  car_mass_center_: 0
   engine_start_time_: 1
-  car_lights_on_: 0
   parking_timer_: 0
   head_left_angle_: -45
   head_right_angle_: 75
@@ -1318,11 +1317,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_acceleration_: 800
-  max_brake_force_: 2000
+  min_acceleration_: -200
   max_acceleration_time_: 4
+  max_brake_force_: 40000
+  max_passive_brake_force_: 100
+  wheel_correction_time_: 1
   max_turn_angle_: 45
-  max_wheel_turns_: 1.5
-  breaking_force_: 2000
+  max_steering_wheel_turns_: 1.5
   acceleration_curve_:
     serializedVersion: 2
     m_Curve:
@@ -1348,7 +1349,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   car_fuel_consumption_: 0.01
-  wheel_correction_time_: 1
 --- !u!114 &3176183810444825114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2025,11 +2025,11 @@ WheelCollider:
     m_AsymptoteValue: 0.5
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
+    m_ExtremumSlip: 0.5
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
+    m_AsymptoteSlip: 2
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.9
   m_Enabled: 1
 --- !u!1 &8900672991482157037
 GameObject:
@@ -2477,11 +2477,11 @@ WheelCollider:
     m_AsymptoteValue: 0.5
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.2
+    m_ExtremumSlip: 0.5
     m_ExtremumValue: 1
-    m_AsymptoteSlip: 0.5
+    m_AsymptoteSlip: 0.7
     m_AsymptoteValue: 0.75
-    m_Stiffness: 1
+    m_Stiffness: 1.9
   m_Enabled: 1
 --- !u!1 &8900672992388574757
 GameObject:
@@ -2666,7 +2666,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8900672992436333646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8379407195652991638}
@@ -3288,7 +3288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7430314572043732534, guid: 82b72fc9d7eac5b4cb46c5cd3319259b, type: 3}
       propertyPath: m_VersionIndex
-      value: 2532
+      value: 2535
       objectReference: {fileID: 0}
     - target: {fileID: 7430314572043732535, guid: 82b72fc9d7eac5b4cb46c5cd3319259b, type: 3}
       propertyPath: m_Mesh
@@ -3441,7 +3441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7430314572043732534, guid: 82b72fc9d7eac5b4cb46c5cd3319259b, type: 3}
       propertyPath: m_VersionIndex
-      value: 2535
+      value: 2538
       objectReference: {fileID: 0}
     - target: {fileID: 7430314572043732535, guid: 82b72fc9d7eac5b4cb46c5cd3319259b, type: 3}
       propertyPath: m_Mesh
