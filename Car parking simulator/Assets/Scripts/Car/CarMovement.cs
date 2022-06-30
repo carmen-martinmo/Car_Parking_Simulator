@@ -45,6 +45,7 @@ public class CarMovement : MonoBehaviour {
   float max_acceleration_time_backup_;
   float last_max_acceleration_time_;
   float reverse_multiplier_ = 1.0f;
+  float car_max_speed_ = 1.0f;
 
   //Internal wheel control values
   float current_wheel_angle_ = 0f;
@@ -229,11 +230,13 @@ public class CarMovement : MonoBehaviour {
   }
 
   void LimitCarSpeed() {
-    if (car_controller_.car_rb().velocity.magnitude > (max_acceleration_ / 10.0f)) {
-      car_controller_.car_rb().velocity = Vector3.ClampMagnitude(car_controller_.car_rb().velocity, max_acceleration_ / 10.0f);
+    car_max_speed_ = max_acceleration_ / 10.0f;
+
+    if (car_controller_.car_rb().velocity.magnitude > car_max_speed_) {
+      car_controller_.car_rb().velocity = Vector3.ClampMagnitude(car_controller_.car_rb().velocity, car_max_speed_);
     }
-    else if (car_controller_.car_rb().velocity.magnitude < -(max_acceleration_ / 10.0f)) { 
-      car_controller_.car_rb().velocity = Vector3.ClampMagnitude(car_controller_.car_rb().velocity, max_acceleration_ / 10.0f);
+    else if (car_controller_.car_rb().velocity.magnitude < -car_max_speed_) { 
+      car_controller_.car_rb().velocity = Vector3.ClampMagnitude(car_controller_.car_rb().velocity, car_max_speed_);
     }
   }
 
@@ -245,6 +248,10 @@ public class CarMovement : MonoBehaviour {
 
   public float car_fuel() {
     return car_fuel_;
+  }
+
+  public float car_max_speed() {
+    return car_max_speed_;
   }
 
   public float car_max_fuel() {

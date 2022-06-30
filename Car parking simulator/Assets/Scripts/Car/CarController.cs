@@ -169,8 +169,7 @@ public class CarController : MonoBehaviour {
     }
 
     Transform camera_tr = main_camera_.transform;
-    Quaternion head = camera_tr.rotation;
-    head = Quaternion.Euler(camera_default_rotation_.eulerAngles.x, current_head_angle_, camera_default_rotation_.eulerAngles.z);
+    Quaternion head = Quaternion.Euler(camera_default_rotation_.eulerAngles.x, current_head_angle_, camera_default_rotation_.eulerAngles.z);
     camera_tr.localRotation = head; 
   }
 

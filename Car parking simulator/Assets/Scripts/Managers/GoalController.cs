@@ -8,21 +8,25 @@ public class GoalController : MonoBehaviour {
 
   CarController car_;
   public Collider car_collider_;
-  float percentage_bounds_ = 0f;
-
-  int text_score_ = 0;
-  int text_fuel_ = 0;
-  int text_collisions_ = 0;
-  float text_time_ = 0.0f; 
-
-  public int next_level_;
-
-  bool loading_scene_ = false;
-
-  bool calculate_score_ = false;
 
   public GameObject canvas_;
   GameObject canvas_instance_;
+
+  [Header("Next level")]
+  [Tooltip("Level id to load when this ends.")]
+  public int next_level_;
+
+  //Car parking precission percentage
+  float percentage_bounds_;
+
+  //Goal screen values
+  int text_score_ ;
+  int text_fuel_ ;
+  int text_collisions_;
+  float text_time_; 
+
+  //Start calculating the parking score
+  bool calculate_score_ = false;
 
   void Start() {
     car_ = GameObject.Find("Car").GetComponent<CarController>();
@@ -64,20 +68,12 @@ public class GoalController : MonoBehaviour {
 
   public void CheckWinCondition() {
     if (percentage_bounds_ > 0.0f || car_.GetComponent<CarController>().car_movement().car_fuel() <= 0.0f) {
-      if (!loading_scene_) {
-        loading_scene_ = true;
-
-        canvas_instance_.SetActive(true);
+      canvas_instance_.SetActive(true);
          
-        StartCoroutine(FillFuelPercentage((int)(car_.GetComponent<CarController>().car_movement().car_fuel())));
-        StartCoroutine(FillCollisionsNumber(car_.number_of_collisions()));
-        StartCoroutine(FillTimeNumber(car_.parking_timer_));
-      }
+      StartCoroutine(FillFuelPercentage((int)(car_.GetComponent<CarController>().car_movement().car_fuel())));
+      StartCoroutine(FillCollisionsNumber(car_.number_of_collisions()));
+      StartCoroutine(FillTimeNumber(car_.parking_timer_));
     }
-  }
-
-  void CalculateScore(){
-    
   }
 
   IEnumerator NextLevelCoroutine() {
