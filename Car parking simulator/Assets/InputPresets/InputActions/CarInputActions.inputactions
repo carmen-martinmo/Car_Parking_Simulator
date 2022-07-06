@@ -84,6 +84,14 @@
                     "expectedControlType": "Axis",
                     "processors": "Invert",
                     "interactions": ""
+                },
+                {
+                    "name": "OpenPopupTest",
+                    "type": "Button",
+                    "id": "fb6a54c4-7cd0-4f79-8520-3aea16657ef1",
+                    "expectedControlType": "Button",
+                    "processors": "Invert",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -194,6 +202,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LeftTrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "999bcb5a-db21-452c-a301-e6cdf786706d",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenPopupTest",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -32,6 +32,10 @@ public class GameController : MonoBehaviour {
     if (gm_instance_ == null) gm_instance_ = this;
     reset_timer_ = 0.0f;
 
+    StartGame();
+  }
+
+  public void StartGame() {
     if (SceneManager.GetActiveScene().name.Equals("MenuScene")) {
       SceneManager.LoadScene("Tutorial_level_1");
     }

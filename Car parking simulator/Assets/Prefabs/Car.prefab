@@ -95,14 +95,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 139330036}
-  m_LocalRotation: {x: -0.00000006620395, y: -0.000012380169, z: 0.70710677, w: 0.70710677}
+  m_LocalRotation: {x: 0.0000020845966, y: -0.0000122035835, z: 0.57357633, w: 0.8191521}
   m_LocalPosition: {x: 0, y: 0, z: 8.1}
   m_LocalScale: {x: 0.0023663149, y: 0.008807177, z: 0.0023663158}
   m_Children:
   - {fileID: 446936557}
   m_Father: {fileID: 1801415673}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0.001, y: -0.001, z: 90}
+  m_LocalEulerAnglesHint: {x: 0.001, y: -0.001, z: 70}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1.623, y: -15.92}
@@ -1245,7 +1245,7 @@ GameObject:
   - component: {fileID: 8900672991292037578}
   - component: {fileID: 8900672991292037577}
   - component: {fileID: 8900672991292037576}
-  - component: {fileID: 3480554153549235774}
+  - component: {fileID: 4563580039378625671}
   m_Layer: 0
   m_Name: Car
   m_TagString: Car
@@ -1780,7 +1780,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3480554153549235774
+--- !u!114 &4563580039378625671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1965,6 +1965,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8c54da28-5a7d-4d53-9621-9d35c8c0e8f5
     m_ActionName: Car/LeftTrigger[/XInputControllerWindows/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PopupManager, Assembly-CSharp
+        m_MethodName: PopupControls
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 66ca93d4-411c-4b93-9fbe-1db5b62b45fb
+    m_ActionName: Popups/NextPopup[/XInputControllerWindows/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Car
@@ -3288,7 +3304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7430314572043732534, guid: 82b72fc9d7eac5b4cb46c5cd3319259b, type: 3}
       propertyPath: m_VersionIndex
-      value: 2535
+      value: 2952
       objectReference: {fileID: 0}
     - target: {fileID: 7430314572043732535, guid: 82b72fc9d7eac5b4cb46c5cd3319259b, type: 3}
       propertyPath: m_Mesh
@@ -3441,7 +3457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7430314572043732534, guid: 82b72fc9d7eac5b4cb46c5cd3319259b, type: 3}
       propertyPath: m_VersionIndex
-      value: 2538
+      value: 2958
       objectReference: {fileID: 0}
     - target: {fileID: 7430314572043732535, guid: 82b72fc9d7eac5b4cb46c5cd3319259b, type: 3}
       propertyPath: m_Mesh
