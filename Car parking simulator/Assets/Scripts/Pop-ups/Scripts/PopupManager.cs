@@ -15,6 +15,8 @@ public class PopupManager : MonoBehaviour {
   
   public PopupSkin current_canvas_skin_;
 
+  PopupAudioManager audio_manager_ref_;
+
   PlayerInput popup_input_;
   List<PlayerInput> other_inputs_;
   List<bool> other_inputs_backup_;
@@ -40,7 +42,10 @@ public class PopupManager : MonoBehaviour {
   float current_time_scale_;
   float saved_time_scale_;
 
+
   void Awake() {
+    audio_manager_ref_ = GetComponent<PopupAudioManager>();
+
     canvas_parent_ = transform.GetChild(0).gameObject;
 
     other_canvas_ = new List<Canvas>();
@@ -76,6 +81,7 @@ public class PopupManager : MonoBehaviour {
       ConfigureSpriteInfo(current_popup_.left_image_, left_image_);
       ConfigureSpriteInfo(current_popup_.right_image_, right_image_);
       ConfigureSpriteInfo(current_popup_.animated_sprite_, animated_image_);
+      audio_manager_ref_.ConfigureAudioSources(current_canvas_skin_);
 
       popup_text_.text = "";
       StartCoroutine(ShowText());
@@ -92,6 +98,12 @@ public class PopupManager : MonoBehaviour {
 
         saved_time_scale_ = Time.timeScale;
         Time.timeScale = current_time_scale_;
+
+        //Open popup sound
+        audio_manager_ref_.PlaySFX(current_canvas_skin_.popup_open_sound_);
+
+        //Start popup music
+        audio_manager_ref_.StartMusic();
       }
 
     } else {
@@ -108,8 +120,14 @@ public class PopupManager : MonoBehaviour {
       current_popup_ = null;
       OpenPopup(next_popup);
 
+      // Next popup sound
+      audio_manager_ref_.PlaySFX(current_canvas_skin_.popup_next_sound_);
+
     } else {
       ClosePopup();
+
+      // Close popup sound
+      audio_manager_ref_.PlaySFX(current_canvas_skin_.popup_close_sound_);
     }
   }
 
@@ -124,6 +142,9 @@ public class PopupManager : MonoBehaviour {
 
     Time.timeScale = saved_time_scale_;
     saved_time_scale_ = 0.0f;
+
+    //Stop popup music
+    audio_manager_ref_.StopMusic();
   }
 
   public void PopupControls(InputAction.CallbackContext context) {
@@ -180,6 +201,9 @@ public class PopupManager : MonoBehaviour {
     for (int i = 0; i <= number_characters && number_characters != popup_text_.text.Length; i++) {
       additive_text_ = current_popup_.popup_text_.Substring(0, i);
       popup_text_.text = additive_text_;
+
+      //Text sound
+      audio_manager_ref_.PlayTextSFX(current_canvas_skin_.popup_text_sound_);
 
       yield return new WaitForSecondsRealtime(current_canvas_skin_.popup_text_speed_);
     }

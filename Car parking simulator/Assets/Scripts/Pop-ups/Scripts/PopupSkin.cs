@@ -18,4 +18,15 @@ public class PopupSkin : ScriptableObject {
   public float popup_animation_speed_;
 
   public float popup_time_scale_;
+
+  //Popup sounds
+  [Header("Popup sound configuration")]
+  public AudioClip popup_open_sound_;
+  public AudioClip popup_close_sound_;
+  public AudioClip popup_next_sound_;
+  public AudioClip popup_text_sound_;
+  public AudioClip popup_background_music_;
+
+  public float popup_sfx_volume_;
+  public float popup_music_volume_;
 }
