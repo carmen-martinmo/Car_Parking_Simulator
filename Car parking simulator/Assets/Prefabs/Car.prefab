@@ -1319,7 +1319,7 @@ MonoBehaviour:
   max_acceleration_: 800
   min_acceleration_: -200
   max_acceleration_time_: 4
-  max_brake_force_: 40000
+  max_brake_force_: 1000
   max_passive_brake_force_: 100
   wheel_correction_time_: 1
   max_turn_angle_: 45

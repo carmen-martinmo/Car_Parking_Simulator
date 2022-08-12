@@ -45,6 +45,7 @@ public class PopupManager : MonoBehaviour {
 
   void Awake() {
     audio_manager_ref_ = GetComponent<PopupAudioManager>();
+    audio_manager_ref_.popup_manager_ref_ = this;
 
     canvas_parent_ = transform.GetChild(0).gameObject;
 
@@ -64,7 +65,7 @@ public class PopupManager : MonoBehaviour {
   void ReloadPopupCanvas() {
     Image popup_background = popup_background_image_.GetComponent<Image>();
     popup_background.sprite = current_canvas_skin_.popup_background_image_;
-    popup_background.color = current_canvas_skin_.poup_background_color_;
+    popup_background.color = popup_background.color + current_canvas_skin_.poup_background_color_;
 
     popup_text_.color = current_canvas_skin_.popup_text_color_;
     popup_text_.font = current_canvas_skin_.popup_text_font_;
@@ -81,7 +82,6 @@ public class PopupManager : MonoBehaviour {
       ConfigureSpriteInfo(current_popup_.left_image_, left_image_);
       ConfigureSpriteInfo(current_popup_.right_image_, right_image_);
       ConfigureSpriteInfo(current_popup_.animated_sprite_, animated_image_);
-      audio_manager_ref_.ConfigureAudioSources(current_canvas_skin_);
 
       popup_text_.text = "";
       StartCoroutine(ShowText());
@@ -90,10 +90,14 @@ public class PopupManager : MonoBehaviour {
       if (current_popup_.on_popup_open_event_ != null) StartCoroutine(PopupEventDelay(current_popup_.on_popup_open_event_));
 
       if (!canvas_parent_.activeSelf) {
-        FindOtherCanvas();
-        FindOtherInputs();
+        audio_manager_ref_.ConfigureAudioSources(current_canvas_skin_);
 
-        SaveOtherCanvas();
+        if (current_canvas_skin_.close_external_canvas_) { 
+          FindOtherCanvas();
+          SaveOtherCanvas();
+        }
+
+        FindOtherInputs();
         SaveOtherInputs();
 
         saved_time_scale_ = Time.timeScale;
@@ -104,6 +108,8 @@ public class PopupManager : MonoBehaviour {
 
         //Start popup music
         audio_manager_ref_.StartMusic();
+
+        canvas_parent_.GetComponent<Animator>().SetBool("PopupIn", true);
       }
 
     } else {
@@ -137,8 +143,12 @@ public class PopupManager : MonoBehaviour {
     
     current_popup_ = null;
 
+    //Need a time stop here
+    canvas_parent_.GetComponent<Animator>().SetBool("PopupIn", false);
+
     RestoreOtherCanvas();
     RestoreOtherInputs();
+    audio_manager_ref_.RestoreOtherAudioSources();
 
     Time.timeScale = saved_time_scale_;
     saved_time_scale_ = 0.0f;
@@ -152,7 +162,6 @@ public class PopupManager : MonoBehaviour {
       //If the text is not fully shown, it skips the text animation.
       //If the text animation ended, it skips to the next popup.
 
-      //NextPopup();
       if (popup_text_.text.Length != current_popup_.popup_text_.Length) { 
         popup_text_.text = current_popup_.popup_text_;
 
@@ -176,21 +185,23 @@ public class PopupManager : MonoBehaviour {
   }
 
   void ConfigureSpriteInfo(GameObject source, GameObject target) {
-    Image img = source.GetComponent<Image>();
-    Animator anim = source.GetComponent<Animator>();
+    if (source != null) {
+      Image img = source.GetComponent<Image>();
+      Animator anim = source.GetComponent<Animator>();
 
-    if (img) {
-      Image target_img = target.GetComponent<Image>();
+      if (img) {
+        Image target_img = target.GetComponent<Image>();
 
-      target_img.sprite = img.sprite;
-      target_img.color = img.color;
-    }
+        target_img.sprite = img.sprite;
+        target_img.color = img.color;
+      }
 
-    if (anim) {
-      Animator target_anim = target.GetComponent<Animator>();
+      if (anim) {
+        Animator target_anim = target.GetComponent<Animator>();
 
-      target_anim.runtimeAnimatorController = anim.runtimeAnimatorController;
-      target_anim.speed = current_canvas_skin_.popup_animation_speed_ / current_time_scale_;
+        target_anim.runtimeAnimatorController = anim.runtimeAnimatorController;
+        target_anim.speed = current_canvas_skin_.popup_animation_speed_ / current_time_scale_;
+      }
     }
   }
 

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5565475672414815165}
+  - component: {fileID: 90966878512375655}
   m_Layer: 0
   m_Name: CanvasParent
   m_TagString: Untagged
@@ -40,6 +41,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &90966878512375655
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669815466630109291}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 37b4fe4834467af40a73156bfcced9c5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3344454570397762682
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 909dbf3b271b6d34cbf040f9bc10bdba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popup_manager_ref_: {fileID: 0}
   popup_sounds_source_: {fileID: 3792116192799942142}
   popup_music_source_: {fileID: 6679471862662072773}
   popup_text_source_: {fileID: 1099117414272175792}
