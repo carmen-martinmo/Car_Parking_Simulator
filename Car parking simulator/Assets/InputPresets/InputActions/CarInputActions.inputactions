@@ -11,7 +11,8 @@
                     "id": "1ea4a0ec-2ed3-4adb-acc2-439c598b860c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Reset level",
@@ -19,7 +20,8 @@
                     "id": "963c11bf-6a2c-422b-94af-23b00072afe4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "RightJoystickPress",
@@ -27,7 +29,8 @@
                     "id": "21e14d90-0f6a-4ae6-9522-546a8cb28d2a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "LeftJoystickPress",
@@ -35,7 +38,8 @@
                     "id": "2476a889-0e8c-4fe7-94f1-8380ffd2c19a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "LeftJoystickVertical",
@@ -43,7 +47,8 @@
                     "id": "17601610-cd1e-4876-9cc0-55b36b0970cd",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "RightJoystickVertical",
@@ -51,7 +56,8 @@
                     "id": "b3de6524-57c1-4db5-bd0b-a2ba20d10151",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "LeftJoystickHorizontal",
@@ -59,7 +65,8 @@
                     "id": "190ee621-6a25-4202-8a04-84111721432e",
                     "expectedControlType": "Axis",
                     "processors": "Invert",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "RightJoystickHorizontal",
@@ -67,7 +74,8 @@
                     "id": "fc35369f-f30a-42c0-9ea2-16618e0b3080",
                     "expectedControlType": "Axis",
                     "processors": "Invert",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "RightTrigger",
@@ -75,7 +83,8 @@
                     "id": "b548a384-72a3-4e53-8d33-67ed09c34506",
                     "expectedControlType": "Axis",
                     "processors": "AxisDeadzone",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "LeftTrigger",
@@ -83,7 +92,8 @@
                     "id": "8c54da28-5a7d-4d53-9621-9d35c8c0e8f5",
                     "expectedControlType": "Axis",
                     "processors": "Invert",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "OpenPopupTest",
@@ -91,7 +101,8 @@
                     "id": "fb6a54c4-7cd0-4f79-8520-3aea16657ef1",
                     "expectedControlType": "Button",
                     "processors": "Invert",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [

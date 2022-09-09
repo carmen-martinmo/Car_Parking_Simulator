@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26209b091b4747c488b66ff9539587c9, type: 3}
+  m_Name: Popup1-1
+  m_EditorClassIdentifier: 
+  popup_id_: 0
+  popup_name_: 
+  popup_text_: Welcome to the tutorial. Now I'm going to teach you how to play the
+    game.
+  left_sprite_: {fileID: 0}
+  left_animation_: {fileID: 0}
+  right_sprite_: {fileID: 0}
+  right_animation_: {fileID: 0}
+  central_sprite_: {fileID: 0}
+  central_animation_: {fileID: 0}
+  popup_time_limit_: -1
+  popup_text_font_: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  popup_text_color_: {r: 0, g: 0, b: 0, a: 1}
+  popup_text_speed_: 0.075
+  popup_text_sound_: {fileID: 8300000, guid: d0a73dfedc0bf4840b4caea55d9ae59c, type: 3}
+  text_min_pitch_variation_: 1
+  text_max_pitch_variation_: 2
+  next_popup_: {fileID: 11400000, guid: 529c01a96ed831c488bff7afc9f98c01, type: 2}
+  popup_event_delay_time_: 0
+  on_popup_open_event_:
+    m_PersistentCalls:
+      m_Calls: []
+  on_popup_close_event_:
+    m_PersistentCalls:
+      m_Calls: []

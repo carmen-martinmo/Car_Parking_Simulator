@@ -60,7 +60,7 @@ public class CarMovement : MonoBehaviour {
 
   //Internal brake values
   float current_brake_force_ = 0f;
-  bool hand_braking_ = false;
+  bool hand_braking_ = true;
 
   public void init(CarController reference) {
     car_controller_ = reference;

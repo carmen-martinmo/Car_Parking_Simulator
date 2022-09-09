@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0ee3134efbb2743becd94433de8b94, type: 3}
+  m_Name: PopupSkin
+  m_EditorClassIdentifier: 
+  popup_background_image_: {fileID: 0}
+  poup_background_color_: {r: 0, g: 0, b: 0, a: 0}
+  popup_animation_speed_: 0
+  popup_time_scale_: 0
+  close_external_canvas_: 0
+  stop_external_audio_sources_: 0
+  popup_open_sound_: {fileID: 0}
+  popup_close_sound_: {fileID: 0}
+  popup_next_sound_: {fileID: 0}
+  popup_background_music_: {fileID: 0}
+  popup_sfx_volume_: 0
+  popup_music_volume_: 0

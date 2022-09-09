@@ -86,6 +86,9 @@ public class CarController : MonoBehaviour {
   public delegate void CarOff();
   public event CarOff OnCarOff;
 
+  public delegate void CarOn();
+  public event CarOn OnCarOn;
+
   void Awake() {
     car_inputs_ = GetComponent<CarInputs>();
     car_inputs_.init(this);
@@ -200,12 +203,15 @@ public class CarController : MonoBehaviour {
 
             GameController.gm_instance_.radio_manager_ref_.StartRadio();
             CameraShaker.Instance.ShakeOnce(0.1f, 5.5f, 0.5f, 2.5f);
+            if (OnCarOn != null) OnCarOn();
+
           } else {
             gm_instance_.audio_controller_ref_.PlaySoundEffect("Engine_off");
             CameraShaker.Instance.ShakeOnce(0.1f, 2.0f, 0.5f, 1.5f);
 
             StartCoroutine(CarOffVibration());
             OnCarOff();
+
           }
         }
       }
